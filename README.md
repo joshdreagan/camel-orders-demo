@@ -15,7 +15,7 @@ Install and run MySQL [https://dev.mysql.com/doc/refman/5.7/en/installing.html]
 
 _Note: For my tests, I chose to run the docker image [https://hub.docker.com/r/mysql/mysql-server/]. You can run it using the command `docker run --name mysql -e MYSQL_DATABASE=example -e MYSQL_ROOT_PASSWORD=Abcd1234 -e MYSQL_ROOT_HOST=172.17.0.1 -p 3306:3306 -d mysql/mysql-server:5.7`. You can then connect and run SQL statements using the command `docker exec -it mysql mysql -uroot -p`._
 
-[Demo Architecture](./images/demo_architecture.png)
+![Demo Architecture](./images/demo_architecture.png)
 
 Build the project source code
 
