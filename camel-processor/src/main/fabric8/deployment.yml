@@ -6,6 +6,16 @@ spec:
         env:
         - name: SPRING_CONFIG_LOCATION
           value: file:/etc/config/
+        - name: SPRING_DATASOURCE_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: ${project.artifactId}-secret
+              key: spring.datasource.username
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ${project.artifactId}-secret
+              key: spring.datasource.password
         - name: AMQPHUB_AMQP10JMS_USERNAME
           valueFrom:
             secretKeyRef:

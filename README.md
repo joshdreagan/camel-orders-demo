@@ -39,7 +39,6 @@ mvn spring-boot:run '-Dserver.port=9090' '-Dmanagement.port=9091'
 
 ```
 oc new-project demo
-oc policy add-role-to-user view system:serviceaccount:demo:default
 cd $PROJECT_ROOT/camel-splitter
 mvn -P openshift clean install fabric8:deploy
 cd $PROJECT_ROOT/camel-processor

@@ -96,9 +96,6 @@
           <plugin>
             <groupId>io.fabric8</groupId>
             <artifactId>fabric8-maven-plugin</artifactId>
-            <configuration>
-              <generateRoute>false</generateRoute>
-            </configuration>
             <executions>
               <execution>
                 <id>fabric8</id>
@@ -106,6 +103,9 @@
                   <goal>resource</goal>
                   <goal>build</goal>
                 </goals>
+                <configuration>
+                  <generateRoute>false</generateRoute>
+                </configuration>
               </execution>
             </executions>
           </plugin>

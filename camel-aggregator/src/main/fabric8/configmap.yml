@@ -2,4 +2,4 @@ metadata:
   name: ${project.artifactId}-configmap
 data:
   application.properties: |-
-    amqphub.amqp10jms.remote-url=amqp://amq-broker:61616
+    amqphub.amqp10jms.remote-url=amqp://broker-amq-tcp:61616
