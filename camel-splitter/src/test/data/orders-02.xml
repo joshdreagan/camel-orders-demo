@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<orders>
+  <order>
+    <customer-id>1</customer-id>
+    <item-id>1</item-id>
+    <quantity>100</quantity>
+  </order>
+</orders>

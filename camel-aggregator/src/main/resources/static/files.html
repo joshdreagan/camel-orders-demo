@@ -1,0 +1,31 @@
+<html>
+  <head>
+    <title>Files</title>
+  </head>
+  <body>
+    <p id="list"></p>
+    <script>
+      const url = '../camel/files';
+      var p = document.getElementById("list");
+      fetch(url)
+      .then((resp) => resp.text())
+      .then(function(data) {
+        var lines = data.split('\n');
+        var ul = document.createElement('ul');
+        lines.forEach(function(item, index) { 
+          var li = document.createElement('li');
+          var a = document.createElement('a');
+          a.target = '_blank';
+          a.href = '../camel/files/' + item;
+          a.appendChild(document.createTextNode(item));
+          li.appendChild(a);
+          ul.appendChild(li);
+        });
+        p.appendChild(ul);
+      })
+      .catch(function(error) {
+        console.log(error);
+      });
+    </script>
+  </body>
+</html>

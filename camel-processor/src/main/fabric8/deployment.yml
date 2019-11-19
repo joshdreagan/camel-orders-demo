@@ -1,0 +1,31 @@
+spec:
+  template:
+    spec:
+      containers:
+      - name: ${project.artifactId}
+        env:
+        - name: SPRING_CONFIG_LOCATION
+          value: file:/etc/config/
+        - name: AMQPHUB_AMQP10JMS_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: ${project.artifactId}-secret
+              key: amqphub.amqp10jms.username
+        - name: AMQPHUB_AMQP10JMS_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: ${project.artifactId}-secret
+              key: amqphub.amqp10jms.password
+        resources:
+          requests:
+            cpu: "0.5"
+          limits:
+            cpu: "4.0"
+        volumeMounts:
+        - name: ${project.artifactId}-configmap-vol
+          mountPath: /etc/config
+          readOnly: true
+      volumes:
+      - name: ${project.artifactId}-configmap-vol
+        configMap:
+          name: ${project.artifactId}-configmap

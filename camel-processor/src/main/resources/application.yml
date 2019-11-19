@@ -1,0 +1,45 @@
+# Servlet Container & Health Setup
+server:
+  address: 0.0.0.0
+management:
+  address: 0.0.0.0
+  port: 8081
+endpoints:
+  enabled: false
+  health:
+    enabled: true
+# Spring Boot
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sampledb?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
+    username: root
+    password: Abcd1234
+    schema: classpath:sql/schema.sql
+    schema-username: ${spring.datasource.username}
+    schema-password: ${spring.datasource.password}
+    data: classpath:sql/data.sql
+    data-username: ${spring.datasource.username}
+    data-password: ${spring.datasource.password}
+    initialization-mode: ALWAYS
+    continue-on-error: true
+
+# AMQPHub
+amqphub:
+  amqp10jms:
+    pool:
+      enabled: true
+    remote-url: amqp://localhost:61616
+    #username: admin
+    #password: admin
+
+# Camel Spring Boot
+camel:
+  springboot:
+    name: camel-processor
+
+# Logging
+logging:
+  config: classpath:logback.xml
+  level:
+    com.redhat.examples: INFO

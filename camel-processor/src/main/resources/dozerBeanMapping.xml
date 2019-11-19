@@ -1,0 +1,16 @@
+<mappings xmlns="http://dozermapper.github.io/schema/bean-mapping"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozermapper.github.io/schema/bean-mapping http://dozermapper.github.io/schema/bean-mapping.xsd">
+  <mapping>
+    <class-a>com.redhat.examples.xml.RawOrder</class-a>
+    <class-b>com.redhat.examples.json.ProcessedOrder</class-b>
+    <field>
+      <a>customerId</a>
+      <b>customer</b>
+    </field>
+    <field>
+      <a>itemId</a>
+      <b>item</b>
+    </field>
+  </mapping>
+</mappings>
