@@ -97,11 +97,11 @@ public class CamelConfiguration extends RouteBuilder {
         .aggregationStrategyRef("orderAggregationStrategy")
         .completionTimeout(5000L)
         .completionSize(10)
-        .log(LoggingLevel.INFO, log, "Completing aggregate order: [${exchangeProperty.CamelAggregatedCorrelationKey}]")
-        .transform().groovy("['orders':request.body]")
-        .marshal().json(JsonLibrary.Jackson, true)
-        .setHeader("CurrentTimeMillis", method(System.class, "currentTimeMillis"))
-        .to(ExchangePattern.InOnly, String.format("file:%s?fileName=order-${exchangeProperty.CamelAggregatedCorrelationKey}-${header.CurrentTimeMillis}.json", props.getDir()))
+          .log(LoggingLevel.INFO, log, "Completing aggregate order: [${exchangeProperty.CamelAggregatedCorrelationKey}]")
+          .transform().groovy("['orders':request.body]")
+          .marshal().json(JsonLibrary.Jackson, true)
+          .setHeader("CurrentTimeMillis", method(System.class, "currentTimeMillis"))
+          .to(ExchangePattern.InOnly, String.format("file:%s?fileName=order-${exchangeProperty.CamelAggregatedCorrelationKey}-${header.CurrentTimeMillis}.json", props.getDir()))
       .end()
     ;
   }
