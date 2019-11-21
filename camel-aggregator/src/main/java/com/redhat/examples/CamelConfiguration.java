@@ -74,9 +74,11 @@ public class CamelConfiguration extends RouteBuilder {
     from("direct:listFiles")
       .log(LoggingLevel.INFO, log, String.format("Listing files in [%s]", props.getDir()))
       .process((Exchange exchange) -> { 
-        Stream<Path> walk = Files.walk(Paths.get(props.getDir()));
-        List<String> files = walk.filter(Files::isRegularFile).map(x -> x.getFileName().toString()).collect(Collectors.toList());
-        exchange.getIn().setBody(String.join("\n", files)); 
+        if (Files.exists(Paths.get(props.getDir()))) {
+          Stream<Path> walk = Files.walk(Paths.get(props.getDir()));
+          List<String> files = walk.filter(Files::isRegularFile).map(x -> x.getFileName().toString()).collect(Collectors.toList());
+          exchange.getIn().setBody(String.join("\n", files)); 
+        }
       })
       .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
     ;
