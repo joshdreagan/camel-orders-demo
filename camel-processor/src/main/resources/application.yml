@@ -24,19 +24,13 @@ spring:
     initialization-mode: ALWAYS
     continue-on-error: true
 
-# AMQPHub
-amqphub:
-  amqp10jms:
-    pool:
-      enabled: true
-    remote-url: amqp://localhost:61616
-    #username: admin
-    #password: admin
-
 # Camel Spring Boot
 camel:
   springboot:
     name: camel-processor
+  component:
+    kafka.configuration:
+      brokers: "localhost:9092"
 
 # Logging
 logging:

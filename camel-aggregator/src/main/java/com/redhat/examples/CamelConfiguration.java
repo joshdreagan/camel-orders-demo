@@ -89,7 +89,7 @@ public class CamelConfiguration extends RouteBuilder {
       .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
     ;
     
-    from("amqp:queue:processed?connectionFactory=#pooledJmsConnectionFactory&acknowledgementModeName=CLIENT_ACKNOWLEDGE")
+    from("kafka:processed?autoOffsetReset=earliest&groupId=camel-aggregator")
       .log(LoggingLevel.INFO, log, "Picked up processed order: [${body}]")
       .unmarshal().json(JsonLibrary.Jackson, Map.class)
       .aggregate()

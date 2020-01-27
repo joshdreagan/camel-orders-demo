@@ -44,15 +44,11 @@
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-amqp-starter</artifactId>
+      <artifactId>camel-kafka-starter</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.amqphub.spring</groupId>
-      <artifactId>amqp-10-jms-spring-boot-starter</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.messaginghub</groupId>
-      <artifactId>pooled-jms</artifactId>
+      <groupId>org.apache.kafka</groupId>
+      <artifactId>kafka-clients</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.camel</groupId>

@@ -5,13 +5,13 @@
 ## Requirements
 
 - [Apache Maven 3.x](http://maven.apache.org)
-- [Red Hat AMQ Broker 7.x](https://developers.redhat.com/products/amq/overview)
+- [Red Hat AMQ Streams 7.x](https://developers.redhat.com/products/amq/overview)
 - [MySQL 5.7.18](https://www.mysql.com/oem/)
   - [Docker Image](https://hub.docker.com/r/mysql/mysql-server/)
 
 ## Preparing
 
-Install and run Red Hat AMQ Broker [https://developers.redhat.com/products/amq/hello-world]
+Install and run Red Hat AMQ Streams [https://developers.redhat.com/products/amq/getting-started]
 
 Install and run MySQL [https://dev.mysql.com/doc/refman/5.7/en/installing.html]
 
@@ -54,7 +54,7 @@ _Note: If running on OpenShift, replace the URLs below with the OpenShift route.
 To upload order data you can use `curl` (as seen below), or you can use the upload form at 'http://localhost:8080/upload.html'.
 
 ```
-curl -X POST -F '@file=@./src/test/data/order-01.xml' 'http://localhost:8080/camel/files/'
+curl -X POST -F '@file=@./src/test/data/orders-01.xml' 'http://localhost:8080/camel/files/'
 ```
 
 To list the processed files you can use `curl` (as seen below), or you can use the files page at 'http://localhost:9090/files.html':

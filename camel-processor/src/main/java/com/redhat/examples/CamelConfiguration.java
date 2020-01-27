@@ -45,7 +45,7 @@ public class CamelConfiguration extends RouteBuilder {
   
   @Override
   public void configure() throws Exception {
-    from("amqp:queue:raw?connectionFactory=#pooledJmsConnectionFactory&acknowledgementModeName=CLIENT_ACKNOWLEDGE")
+    from("kafka:raw?autoOffsetReset=earliest&groupId=camel-processor")
       .log(LoggingLevel.INFO, log, "Picked up raw order: [${body}]")
       .unmarshal().jaxb("com.redhat.examples.xml")
       .to("dozer:rawToProcessed?sourceModel=com.redhat.examples.xml.RawOrder&targetModel=com.redhat.examples.json.ProcessedOrder")
@@ -55,7 +55,7 @@ public class CamelConfiguration extends RouteBuilder {
       .end()
       .marshal().json(JsonLibrary.Jackson, false)
       .log(LoggingLevel.INFO, log, "Sending processed order: [${body}]")
-      .to(ExchangePattern.InOnly, "amqp:queue:processed?connectionFactory=#pooledJmsConnectionFactory")
+      .to(ExchangePattern.InOnly, "kafka:processed")
     ;
     
     from("direct:fetchDescription")

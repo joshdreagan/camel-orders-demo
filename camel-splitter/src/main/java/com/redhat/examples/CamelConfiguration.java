@@ -59,7 +59,7 @@ public class CamelConfiguration extends RouteBuilder {
       .log(LoggingLevel.INFO, log, "Picked up orders file: [${headers.CamelFileName}]")
       .split(xpath("/orders/order"))
         .log(LoggingLevel.INFO, log, "Sending order: [${body}]")
-        .to(ExchangePattern.InOnly, "amqp:queue:raw?connectionFactory=#pooledJmsConnectionFactory")
+        .to(ExchangePattern.InOnly, "kafka:raw")
       .end()
     ;
   }
