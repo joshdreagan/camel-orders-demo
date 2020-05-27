@@ -16,21 +16,13 @@
  */
 package com.redhat.examples;
 
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-import org.apache.camel.Exchange;
 import org.apache.camel.ExchangePattern;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.language.SimpleExpression;
-import org.apache.camel.model.rest.RestBindingMode;
 import org.apache.camel.processor.aggregate.AggregationStrategy;
 import org.apache.camel.util.toolbox.AggregationStrategies;
 import org.slf4j.Logger;
@@ -59,35 +51,6 @@ public class CamelConfiguration extends RouteBuilder {
   
   @Override
   public void configure() throws Exception {
-    
-    rest("/files")
-      .get("/")
-        .produces("text/plain")
-        .bindingMode(RestBindingMode.off)
-        .to("direct:listFiles")
-      .get("/{filename}")
-        .produces("application/json")
-        .bindingMode(RestBindingMode.off)
-        .to("direct:getFile")
-    ;
-    
-    from("direct:listFiles")
-      .log(LoggingLevel.INFO, log, String.format("Listing files in [%s]", props.getDir()))
-      .process((Exchange exchange) -> { 
-        if (Files.exists(Paths.get(props.getDir()))) {
-          Stream<Path> walk = Files.walk(Paths.get(props.getDir()));
-          List<String> files = walk.filter(Files::isRegularFile).map(x -> x.getFileName().toString()).collect(Collectors.toList());
-          exchange.getIn().setBody(String.join("\n", files)); 
-        }
-      })
-      .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
-    ;
-    
-    from("direct:getFile")
-      .log(LoggingLevel.INFO, log, "Getting file [${header.filename}]")
-      .routingSlip(simpleF("language:constant:file:%s${headers.filename}?contentCache=false", props.getDir()))
-      .setHeader(Exchange.CONTENT_TYPE, constant("application/json"))
-    ;
     
     from("amqp:queue:processed?connectionFactory=#pooledJmsConnectionFactory&acknowledgementModeName=CLIENT_ACKNOWLEDGE")
       .log(LoggingLevel.INFO, log, "Picked up processed order: [${body}]")

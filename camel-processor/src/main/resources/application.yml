@@ -29,7 +29,7 @@ amqphub:
   amqp10jms:
     pool:
       enabled: true
-    remote-url: amqp://localhost:61616
+    remote-url: amqp://localhost:5672
     #username: admin
     #password: admin
 
