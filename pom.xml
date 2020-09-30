@@ -26,8 +26,8 @@
     
     <fabric8-maven-plugin.version>4.3.1</fabric8-maven-plugin.version>
 
-    <fuse.version>7.4.0.fuse-740036-redhat-00002</fuse.version>
-    <kafka-clients.version>2.3.0</kafka-clients.version>
+    <fuse.version>7.7.0.fuse-sb2-770010-redhat-00001</fuse.version>
+    <kafka-clients.version>2.5.0</kafka-clients.version>
   </properties>
 
   <dependencyManagement>

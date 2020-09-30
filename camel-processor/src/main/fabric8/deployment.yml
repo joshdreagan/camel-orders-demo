@@ -4,7 +4,7 @@ spec:
       containers:
       - name: ${project.artifactId}
         env:
-        - name: SPRING_CONFIG_LOCATION
+        - name: SPRING_CONFIG_ADDITIONAL_LOCATION
           value: file:/etc/config/
         - name: SPRING_DATASOURCE_USERNAME
           valueFrom:
