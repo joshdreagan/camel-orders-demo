@@ -19,13 +19,13 @@ spec:
         - name: AMQPHUB_AMQP10JMS_USERNAME
           valueFrom:
             secretKeyRef:
-              name: ${project.artifactId}-secret
-              key: amqphub.amqp10jms.username
+              name: ex-aao-credentials-secret
+              key: AMQ_USER
         - name: AMQPHUB_AMQP10JMS_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: ${project.artifactId}-secret
-              key: amqphub.amqp10jms.password
+              name: ex-aao-credentials-secret
+              key: AMQ_PASSWORD
         resources:
           requests:
             cpu: "0.5"
