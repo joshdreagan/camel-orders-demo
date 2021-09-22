@@ -19,44 +19,29 @@ package com.redhat.examples;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.apache.camel.Exchange;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.camel.model.language.SimpleExpression;
 import org.apache.camel.model.rest.RestBindingMode;
-import org.apache.camel.processor.aggregate.AggregationStrategy;
-import org.apache.camel.util.toolbox.AggregationStrategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 @Component
 public class FileServerConfiguration extends RouteBuilder {
 
   private static final Logger log = LoggerFactory.getLogger(FileServerConfiguration.class);
-  
+
   @Autowired
   private AggregatorProperties props;
-  
-  @Bean
-  private AggregationStrategy orderAggregationStrategy() {
-    return AggregationStrategies
-            .flexible()
-            .accumulateInCollection(ArrayList.class)
-            .storeInBody()
-            .pick(new SimpleExpression("${body}"))
-          ;
-  }
-  
+
   @Override
   public void configure() throws Exception {
-    
+
     rest("/files")
       .get("/")
         .produces("text/plain")
@@ -67,19 +52,19 @@ public class FileServerConfiguration extends RouteBuilder {
         .bindingMode(RestBindingMode.off)
         .to("direct:getFile")
     ;
-    
+
     from("direct:listFiles")
       .log(LoggingLevel.INFO, log, String.format("Listing files in [%s]", props.getDir()))
-      .process((Exchange exchange) -> { 
+      .process((Exchange exchange) -> {
         if (Files.exists(Paths.get(props.getDir()))) {
           Stream<Path> walk = Files.walk(Paths.get(props.getDir()));
           List<String> files = walk.filter(Files::isRegularFile).map(x -> x.getFileName().toString()).collect(Collectors.toList());
-          exchange.getIn().setBody(String.join("\n", files)); 
+          exchange.getIn().setBody(String.join("\n", files));
         }
       })
       .setHeader(Exchange.CONTENT_TYPE, constant("text/plain"))
     ;
-    
+
     from("direct:getFile")
       .log(LoggingLevel.INFO, log, "Getting file [${header.filename}]")
       .routingSlip(simpleF("language:constant:file:%s${headers.filename}?contentCache=false", props.getDir()))
