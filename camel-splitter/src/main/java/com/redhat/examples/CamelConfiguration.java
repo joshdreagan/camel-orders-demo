@@ -28,13 +28,13 @@ import org.springframework.stereotype.Component;
 public class CamelConfiguration extends RouteBuilder {
 
   private static final Logger log = LoggerFactory.getLogger(CamelConfiguration.class);
-  
+
   @Autowired
   private SplitterProperties props;
-  
+
   @Override
   public void configure() throws Exception {
-    
+
     fromF("file:%s?delete=true&readLock=fileLock", props.getDir())
       .log(LoggingLevel.INFO, log, "Picked up orders file: [${headers.CamelFileName}]")
       .split(xpath("/orders/order"))
