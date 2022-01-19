@@ -74,6 +74,18 @@
 
   <profiles>
     <profile>
+      <id>standalone</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <dependencies>
+        <dependency>
+          <groupId>io.hawt</groupId>
+          <artifactId>hawtio-springboot</artifactId>
+        </dependency>
+      </dependencies>
+    </profile>
+    <profile>
       <id>openshift</id>
       <build>
         <plugins>

@@ -5,7 +5,7 @@
 ## Requirements
 
 - [Apache Maven 3.x](http://maven.apache.org)
-- [Red Hat AMQ Streams 7.x](https://developers.redhat.com/products/amq/overview)
+- [Red Hat AMQ Streams 2.x](https://developers.redhat.com/products/amq/overview)
 - [MySQL 5.7.18](https://www.mysql.com/oem/)
   - [Docker Image](https://hub.docker.com/r/mysql/mysql-server/)
 
@@ -15,7 +15,7 @@ Install and run Red Hat AMQ Streams [https://developers.redhat.com/products/amq/
 
 Install and run MySQL [https://dev.mysql.com/doc/refman/5.7/en/installing.html]
 
-_Note: For my tests, I chose to run the docker image [https://hub.docker.com/r/mysql/mysql-server/]. You can run it using the command `docker run --name mysql -e MYSQL_DATABASE=example -e MYSQL_ROOT_PASSWORD=Abcd1234 -e MYSQL_ROOT_HOST=172.17.0.1 -p 3306:3306 -d mysql/mysql-server:5.7`. You can then connect and run SQL statements using the command `docker exec -it mysql mysql -uroot -p`._
+_Note: For my tests, I chose to run the docker image [https://hub.docker.com/r/mysql/mysql-server/]. You can run it using the command `docker run --name mysql -e MYSQL_DATABASE=example -e MYSQL_ROOT_PASSWORD=Abcd1234 -e MYSQL_ROOT_HOST=% -p 3306:3306 -d mysql/mysql-server:5.7`. You can then connect and run SQL statements using the command `docker exec -it mysql mysql -uroot -p`._
 
 Build the project source code
 
@@ -28,11 +28,11 @@ mvn clean install
 
 ```
 cd $PROJECT_ROOT/camel-splitter
-mvn spring-boot:run '-Dserver.port=8080' '-Dmanagement.port=8081'
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8080 --management.endpoints.web.exposure.include=hawtio,jolokia,health,info --hawtio.authenticationEnabled=false --management.endpoints.hawtio.enabled=true --management.endpoints.jolokia.enabled=true"
 cd $PROJECT_ROOT/camel-processor
-mvn spring-boot:run '-Dserver.port=7070' '-Dmanagement.port=7071'
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=7070 --management.endpoints.web.exposure.include=hawtio,jolokia,health,info --hawtio.authenticationEnabled=false --management.endpoints.hawtio.enabled=true --management.endpoints.jolokia.enabled=true"
 cd $PROJECT_ROOT/camel-aggregator
-mvn spring-boot:run '-Dserver.port=9090' '-Dmanagement.port=9091'
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=9090 --management.endpoints.web.exposure.include=hawtio,jolokia,health,info --hawtio.authenticationEnabled=false --management.endpoints.hawtio.enabled=true --management.endpoints.jolokia.enabled=true"
 ```
 
 ## Running the example in OpenShift
