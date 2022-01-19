@@ -11,9 +11,7 @@
 
 ## Preparing
 
-Install and run Red Hat AMQ Broker [https://developers.redhat.com/products/amq/hello-world]
-
-- Broker configs for OpenShift can be found in the `kube/` directory.
+Install and run Red Hat AMQ Broker [https://developers.redhat.com/products/amq/getting-started]
 
 Install and run MySQL [https://dev.mysql.com/doc/refman/5.7/en/installing.html]
 
