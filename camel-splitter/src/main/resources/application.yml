@@ -3,9 +3,13 @@ server:
   address: 0.0.0.0
 management:
   endpoints:
-    enabled: false
+    web.exposure.include: info,health,camelroutes
+  endpoint:
     health:
       enabled: true
+    camelroutes:
+      enabled: true
+      read-only: true
 
 # AMQPHub
 amqphub:

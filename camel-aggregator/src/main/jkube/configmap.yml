@@ -2,4 +2,4 @@ metadata:
   name: ${project.artifactId}-configmap
 data:
   application.properties: |-
-    amqphub.amqp10jms.remote-url=amqp://ex-aao-hdls-svc:5672
+    amqphub.amqp10jms.remote-url=amqp://ex-aao-amqp-0-svc:5672

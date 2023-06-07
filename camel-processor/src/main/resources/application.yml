@@ -3,9 +3,13 @@ server:
   address: 0.0.0.0
 management:
   endpoints:
-    enabled: false
+    web.exposure.include: info,health,camelroutes
+  endpoint:
     health:
       enabled: true
+    camelroutes:
+      enabled: true
+      read-only: true
 
 # Spring Boot
 spring:
@@ -14,14 +18,15 @@ spring:
     url: jdbc:mysql://localhost:3306/sampledb?autoReconnect=true&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: Abcd1234
-    schema: classpath:sql/schema.sql
-    schema-username: ${spring.datasource.username}
-    schema-password: ${spring.datasource.password}
-    data: classpath:sql/data.sql
-    data-username: ${spring.datasource.username}
-    data-password: ${spring.datasource.password}
-    initialization-mode: ALWAYS
-    continue-on-error: true
+  sql:
+    init:
+      enabled: true
+      mode: always
+      schema-locations: classpath:sql/schema.sql
+      data-locations: classpath:sql/data.sql
+      username: ${spring.datasource.username}
+      password: ${spring.datasource.password}
+      continue-on-error: true
 
 # AMQPHub
 amqphub:

@@ -22,7 +22,7 @@ import org.apache.camel.ExchangePattern;
 import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
-import org.apache.camel.processor.aggregate.AggregationStrategy;
+import org.apache.camel.AggregationStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -34,6 +34,7 @@ public class CamelConfiguration extends RouteBuilder {
   private static final Logger log = LoggerFactory.getLogger(CamelConfiguration.class);
   
   @Bean
+  @SuppressWarnings("unused")
   private AggregationStrategy descriptionEnrichmentStrategy() {
     return (Exchange original, Exchange resource) -> {
       if (resource.getIn().getBody() != null) {
@@ -51,7 +52,7 @@ public class CamelConfiguration extends RouteBuilder {
       .to("dozer:rawToProcessed?sourceModel=com.redhat.examples.xml.RawOrder&targetModel=com.redhat.examples.json.ProcessedOrder")
       .enrich()
         .constant("direct:fetchDescription")
-        .aggregationStrategyRef("descriptionEnrichmentStrategy")
+        .aggregationStrategy("descriptionEnrichmentStrategy")
       .end()
       .marshal().json(JsonLibrary.Jackson, false)
       .log(LoggingLevel.INFO, log, "Sending processed order: [${body}]")
