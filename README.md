@@ -7,7 +7,7 @@
 - [Apache Maven 3.x](http://maven.apache.org)
 - [Red Hat AMQ Broker 7.x](https://developers.redhat.com/products/amq/overview)
 - [MySQL 8](https://www.mysql.com/oem/)
-  - [Docker Image](https://hub.docker.com/r/mysql/mysql-server/)
+  - [Docker Image](https://hub.docker.com/_/mysql)
 
 ## Preparing
 
