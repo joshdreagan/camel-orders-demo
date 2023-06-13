@@ -23,8 +23,8 @@ import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.model.dataformat.JsonLibrary;
 import org.apache.camel.model.language.SimpleExpression;
-import org.apache.camel.processor.aggregate.AggregationStrategy;
-import org.apache.camel.util.toolbox.AggregationStrategies;
+import org.apache.camel.AggregationStrategy;
+import org.apache.camel.builder.AggregationStrategies;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +40,7 @@ public class CamelConfiguration extends RouteBuilder {
   private AggregatorProperties props;
   
   @Bean
+  @SuppressWarnings("unused")
   private AggregationStrategy orderAggregationStrategy() {
     return AggregationStrategies
             .flexible()
@@ -57,7 +58,7 @@ public class CamelConfiguration extends RouteBuilder {
       .unmarshal().json(JsonLibrary.Jackson, Map.class)
       .aggregate()
         .simple("${body[customer]}")
-        .aggregationStrategyRef("orderAggregationStrategy")
+        .aggregationStrategy("orderAggregationStrategy")
         .completionTimeout(5000L)
         .completionSize(10)
           .log(LoggingLevel.INFO, log, "Completing aggregate order: [${exchangeProperty.CamelAggregatedCorrelationKey}]")

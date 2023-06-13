@@ -6,16 +6,16 @@
 
 - [Apache Maven 3.x](http://maven.apache.org)
 - [Red Hat AMQ Streams 2.x](https://developers.redhat.com/products/amq/overview)
-- [MySQL 5.7.18](https://www.mysql.com/oem/)
-  - [Docker Image](https://hub.docker.com/r/mysql/mysql-server/)
+- [MySQL 8](https://www.mysql.com/oem/)
+  - [Docker Image](https://hub.docker.com/_/mysql)
 
 ## Preparing
 
-Install and run Red Hat AMQ Streams [https://developers.redhat.com/products/amq/getting-started]
+Install and run Red Hat AMQ Streams [https://access.redhat.com/documentation/en-us/red_hat_amq_streams/2.4/html/getting_started_with_amq_streams_on_openshift]
 
-Install and run MySQL [https://dev.mysql.com/doc/refman/5.7/en/installing.html]
+Install and run MySQL [https://dev.mysql.com/doc/refman/8.0/en/installing.html]
 
-_Note: For my tests, I chose to run the docker image [https://hub.docker.com/r/mysql/mysql-server/]. You can run it using the command `docker run --name mysql -e MYSQL_DATABASE=example -e MYSQL_ROOT_PASSWORD=Abcd1234 -e MYSQL_ROOT_HOST=% -p 3306:3306 -d mysql/mysql-server:5.7`. You can then connect and run SQL statements using the command `docker exec -it mysql mysql -uroot -p`._
+_Note: For my tests, I chose to run the docker image [https://hub.docker.com/_/mysql]. You can run it using the command `podman run --name mysql -e MYSQL_DATABASE=sampledb -e MYSQL_ROOT_PASSWORD=Abcd1234 -p 3306:3306 -d mysql:8`. You can then connect and run SQL statements using the command `podman exec -it mysql mysql -uroot -p`._
 
 Build the project source code
 
@@ -28,11 +28,11 @@ mvn clean install
 
 ```
 cd $PROJECT_ROOT/camel-splitter
-mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8080 --management.endpoints.web.exposure.include=hawtio,jolokia,health,info --hawtio.authenticationEnabled=false --management.endpoints.hawtio.enabled=true --management.endpoints.jolokia.enabled=true"
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=8080"
 cd $PROJECT_ROOT/camel-processor
-mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=7070 --management.endpoints.web.exposure.include=hawtio,jolokia,health,info --hawtio.authenticationEnabled=false --management.endpoints.hawtio.enabled=true --management.endpoints.jolokia.enabled=true"
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=7070"
 cd $PROJECT_ROOT/camel-aggregator
-mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=9090 --management.endpoints.web.exposure.include=hawtio,jolokia,health,info --hawtio.authenticationEnabled=false --management.endpoints.hawtio.enabled=true --management.endpoints.jolokia.enabled=true"
+mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=9090"
 ```
 
 ## Running the example in OpenShift
@@ -40,11 +40,11 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=9090 --management
 ```
 oc new-project demo
 cd $PROJECT_ROOT/camel-splitter
-mvn -P openshift clean install fabric8:deploy
+mvn -P openshift clean install oc:deploy
 cd $PROJECT_ROOT/camel-processor
-mvn -P openshift clean install fabric8:deploy
+mvn -P openshift clean install oc:deploy
 cd $PROJECT_ROOT/camel-aggregator
-mvn -P openshift clean install fabric8:deploy
+mvn -P openshift clean install oc:deploy
 ```
 
 ## Testing the code
