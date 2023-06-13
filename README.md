@@ -11,11 +11,11 @@
 
 ## Preparing
 
-Install and run Red Hat AMQ Broker [https://developers.redhat.com/products/amq/getting-started]
+Install and run Red Hat AMQ Broker [https://access.redhat.com/documentation/en-us/red_hat_amq_broker/7.11/html/getting_started_with_amq_broker]
 
 Install and run MySQL [https://dev.mysql.com/doc/refman/8.0/en/installing.html]
 
-_Note: For my tests, I chose to run the docker image [https://hub.docker.com/r/mysql/mysql-server/]. You can run it using the command `podman run --name mysql -e MYSQL_DATABASE=sampledb -e MYSQL_ROOT_PASSWORD=Abcd1234 -p 3306:3306 -d mysql:8`. You can then connect and run SQL statements using the command `podman exec -it mysql mysql -uroot -p`._
+_Note: For my tests, I chose to run the docker image [https://hub.docker.com/_/mysql]. You can run it using the command `podman run --name mysql -e MYSQL_DATABASE=sampledb -e MYSQL_ROOT_PASSWORD=Abcd1234 -p 3306:3306 -d mysql:8`. You can then connect and run SQL statements using the command `podman exec -it mysql mysql -uroot -p`._
 
 Build the project source code
 
@@ -54,7 +54,7 @@ _Note: If running on OpenShift, replace the URLs below with the OpenShift route.
 To upload order data you can use `curl` (as seen below), or you can use the upload form at 'http://localhost:8080/upload.html'.
 
 ```
-curl -X POST -F '@file=@./src/test/data/order-01.xml' 'http://localhost:8080/camel/files/'
+curl -X POST -F '@file=@./src/test/data/orders-01.xml' 'http://localhost:8080/camel/files/'
 ```
 
 To list the processed files you can use `curl` (as seen below), or you can use the files page at 'http://localhost:9090/files.html':
