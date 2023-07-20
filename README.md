@@ -38,7 +38,9 @@ mvn spring-boot:run -Dspring-boot.run.arguments="--server.port=9090"
 ## Running the example in OpenShift
 
 ```
-oc new-project demo
+oc new-project broker #Install your AMQ Broker instance here.
+oc new-project db #Install your MySQL DB instance here.
+oc new-project demo #Install your Camel apps here.
 cd $PROJECT_ROOT/camel-splitter
 mvn -P openshift clean install oc:deploy
 cd $PROJECT_ROOT/camel-processor
