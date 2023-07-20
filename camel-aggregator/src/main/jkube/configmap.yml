@@ -2,4 +2,4 @@ metadata:
   name: ${project.artifactId}-configmap
 data:
   application.properties: |-
-    camel.component.kafka.configuration.brokers=my-cluster-kafka-bootstrap.strimzi.svc:9092
+    camel.component.kafka.configuration.brokers=my-cluster-kafka-bootstrap.streams.svc:9092
